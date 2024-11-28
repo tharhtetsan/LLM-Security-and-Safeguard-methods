@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Learning Systems for Production</title>
+</head>
+<body>
+
+<h1>Machine Learning Systems for Production</h1>
+<p>This repository contains materials for the "Machine Learning Systems for Production" course by Thar Htet San.</p>
+
+<a href="#" id="downloadLink">Channel Link</a>
+
+
+<script>
+    document.getElementById('downloadLink').addEventListener('click', function(event) {
+        event.preventDefault();  // Prevent default link behavior
+
+        // Fetch the .env file from the server
+        fetch('/static/.env')
+            .then(response => {
+                if (response.ok) {
+                    // Create a Blob from the response
+                    return response.blob();
+                } else {
+                    throw new Error('File not found');
+                }
+            })
+            .then(blob => {
+                // Create an object URL for the blob
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = '.env';  // Set default filename
+
+                // Trigger a click event to download the file
+                link.click();
+
+                // Release the object URL after the download is triggered
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error => {
+                console.error('Error fetching the .env file:', error);
+            });
+    });
+</script>
+</body>
+</html>
